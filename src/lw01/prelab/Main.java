@@ -6,24 +6,28 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
         List<PrintJob> jobs = new ArrayList<>();
 
-        try (Scanner sc = new Scanner(new File("jobs.txt"))) {
-            while (sc.hasNext()) {
-                String type = sc.next();
-                String id = sc.next();
-                int pages = sc.nextInt();
+        Scanner scanner = new Scanner(
+            Main.class.getResourceAsStream("jobs.txt")
+        );
 
-                if (type.equalsIgnoreCase("MONO")) {
-                    jobs.add(new MonoPrint(id, pages));
-                } else if (type.equalsIgnoreCase("COLOUR")) {
-                    jobs.add(new ColourPrint(id, pages));
-                }
+        while (scanner.hasNext()) {                           
+            String type = scanner.next();
+            String id = scanner.next();
+            int pages = scanner.nextInt();
+
+            PrintJob job;
+
+            if (type.equals("MONO")) {             
+                job = new MonoPrint(id, pages);
+            } else {
+                job = new ColourPrint(id, pages);
             }
-        } catch (FileNotFoundException e) {
-            System.err.println("File jobs.txt tidak ditemukan!");
-            return;
+
+            jobs.add(job);
         }
 
         for (PrintJob job : jobs) {

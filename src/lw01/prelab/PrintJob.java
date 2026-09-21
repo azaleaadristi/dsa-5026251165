@@ -23,6 +23,7 @@ public abstract class PrintJob implements Chargeable {
     @Override
     public abstract int calculateCharge();
 
+    // OVERLOADING
     public int calculateCharge(int copies) {
         if (copies <= 0) {
             throw new IllegalArgumentException("Jumlah copy harus positif");
